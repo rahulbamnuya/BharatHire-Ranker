@@ -1,0 +1,26 @@
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Large datasets & output submissions
+*.jsonl
+*.gz
+*.csv
+data/
+
+# Explicitly track the sample candidate JSON
+!sample_candidates.json
+
+# IDEs and system files
+.vscode/
+.idea/
+.DS_Store
+
+# Large presentation files
+*.pptx
+

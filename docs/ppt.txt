@@ -1,0 +1,217 @@
+se this concept name in your PPT:
+
+  Hybrid Evidence-Based Candidate Ranking Funnel
+
+  Not “chatbot”, not “LLM screening”. It is a multi-signal learning-to-rank inspired system.
+
+  Exact model/concept to say:
+
+  > Our solution uses a deterministic multi-stage ranking model combining JD evidence scoring, skill
+  > normalization, honeypot detection, behavioral availability signals, and explainable rule-based
+  > ranking. It is learning-to-rank inspired, but optimized for offline CPU reproduction under
+  > hackathon constraints.
+
+  For accuracy improvement, say:
+
+  > Future improvement: create a small manually labeled validation set and train/tune a lightweight
+  > Learning-to-Rank model such as XGBoost Ranker / LambdaMART over the same features.
+
+  ———
+
+  Slide 2: Solution Overview
+
+  Proposed solution:
+
+  > BharatHire AI Ranker ranks 100,000 candidates for the Redrob Senior AI Engineer JD using an
+  > offline, CPU-only ranking pipeline. It identifies candidates with real production retrieval,
+  > ranking, vector search, recommendation, evaluation, and AI engineering experience, then adjusts
+  > rank using Redrob behavioral signals.
+
+  Differentiation:
+
+  > Traditional matching checks keywords. Our system evaluates career-history evidence, production
+  > context, candidate availability, response behavior, honeypot risk, and factual reasoning. It
+  > avoids over-ranking candidates who only stuff AI keywords.
+
+  ———
+
+  Slide 3: JD Understanding
+
+  Key JD requirements:
+
+  - 5-9 years preferred experience.
+  - Production AI/ML systems experience.
+  - Retrieval, embeddings, vector databases, hybrid search.
+  - Ranking, recommendation, search relevance.
+  - Evaluation: NDCG, MRR, MAP, A/B testing.
+  - Strong Python.
+  - Product engineering mindset.
+  - Not pure research-only.
+  - Not consulting-only background.
+  - Candidate should be active and reachable.
+
+  Most important signals:
+
+  - Career history descriptions.
+  - Skills and skill duration.
+  - Product-company experience.
+  - Production deployment language.
+  - Ranking/retrieval/evaluation evidence.
+  - Recruiter response rate.
+  - Last active date.
+  - Notice period.
+  - GitHub activity.
+  - Skill assessments.
+  - Honeypot/inconsistency checks.
+
+  ———
+
+  Slide 4: Ranking Methodology
+
+  How retrieve/score/rank:
+
+  > The system streams candidates, removes suspicious profiles, extracts JD evidence from profile and
+  > work history text, scores technical fit, adds behavioral availability signals, then sorts by
+  > final score.
+
+  Models/algorithms:
+
+  - Weighted evidence ranker.
+  - Skill normalization ontology.
+  - Honeypot detection rules.
+  - Behavioral signal scoring.
+  - Deterministic tie-breaking.
+  - Optional local embeddings only if cached offline.
+
+  Final score concept:
+
+  Final Score =
+  Experience Fit
+  + Core AI Skill Evidence
+  + Retrieval/Ranking Evidence
+  + Production Evidence
+  + Evaluation Evidence
+  + Product Company Signal
+  + Behavioral Availability Score
+  - Honeypot / Bad Fit Penalties
+
+  ———
+
+  Slide 5: Explainability & Data Validation
+
+  Explainability:
+
+  > Every selected candidate gets a 1-2 sentence explanation using only real profile facts: title,
+  > YoE, employers, skills, response rate, notice period, and last active date.
+
+  No hallucination:
+
+  > We do not use LLM-generated candidate claims. Reasoning is created from structured candidate
+  > fields only.
+
+  Suspicious profiles:
+
+  > Honeypot detection checks impossible dates, future jobs, company founding-year violations,
+  > excessive expert skills with zero duration, overlapping histories, and experience mismatches.
+
+  ———
+
+  Slide 6: End-to-End Workflow
+
+  Candidate JSONL / JSONL.GZ
+          ↓
+  Streaming parser
+          ↓
+  Honeypot + consistency filter
+          ↓
+  JD evidence extraction
+          ↓
+  Technical fit scoring
+          ↓
+  Behavioral signal scoring
+          ↓
+  Final deterministic ranking
+          ↓
+  Top 100 CSV
+          ↓
+  Validator + reasoning review
+
+  ———
+
+  Slide 7: System Architecture
+
+  Use this architecture text:
+
+  Input Layer
+  - JSON / JSONL / JSONL.GZ candidate parser
+
+  Validation Layer
+  - Honeypot detector
+  - Chronology checks
+  - Skill duration checks
+
+  Feature Layer
+  - Skill normalization
+  - JD evidence extraction
+  - Company/type detection
+  - Behavioral signal extraction
+
+  Ranking Layer
+  - Weighted evidence scoring
+  - Availability scoring
+  - Penalty model
+  - Deterministic sorting
+
+  Output Layer
+  - submission.csv
+  - factual reasoning
+  - Streamlit demo dashboard
+
+  ———
+
+  Slide 8: Results & Performance
+
+  Use these points:
+
+  - Processed full 100k candidate pool.
+  - Runtime around 23 seconds locally.
+  - CPU-only.
+  - No network calls.
+  - No hosted LLM APIs.
+  - submission.csv passed official validator.
+  - Top 100 had 0 locally detected honeypots.
+  - Output includes factual reasoning for every candidate.
+
+  ———
+
+  Slide 9: Technologies Used
+
+  | Tech | Why |
+  |---|---|
+  | Python | Fast offline ranking and easy reproduction |
+  | Standard library JSON/Gzip/CSV | No heavy dependency for official ranking |
+  | Streamlit | Demo/sandbox UI |
+  | Pandas | Dashboard tables |
+  | Plotly | Score/skill visualizations |
+  | Docker | Reproducible deployment |
+  | Rule-based LTR-inspired scoring | Explainable and CPU-safe |
+  | Optional sentence-transformers | Local semantic experiment only, not required |
+
+  ———
+
+  Best answer if they ask “which model did you use?”
+
+  Say this:
+
+  > We used a deterministic, learning-to-rank inspired multi-signal scoring model rather than a
+  > black-box LLM. The model combines technical JD evidence, normalized skills, career-history
+  > signals, product-company context, Redrob behavioral signals, and honeypot penalties. This was
+  > chosen because the challenge requires CPU-only, no-network, reproducible ranking under 5 minutes.
+
+  Future accuracy improvement answer:
+
+  > The next step is to manually label 100-300 candidates and tune the feature weights or train a
+  > lightweight XGBoost/LambdaMART ranker. That would improve NDCG@10 and NDCG@50 without breaking
+  > the compute constraints.
+
+────────────────────

@@ -1,0 +1,75 @@
+# Redrob Hackathon — Submission Metadata
+# Auto-generated and configured to match the official validation spec.
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "BharatHire AI Ranker"
+
+primary_contact:
+  name: "Rahul"
+  email: "rahul@example.com"
+  phone: "+91-9876543210"
+
+team_members:
+  - name: "Rahul"
+    email: "rahul@example.com"
+    role: "AI/ML Engineer"
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/rahulbamnuya/BharatHire-Ranker"
+sandbox_link: "https://huggingface.co/spaces/rahulbamniya/BharatHire-Ranker"
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "MacBook Pro M1"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.9.6"
+  os: "macOS 14.2"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+ai_tools_used:
+  - "Claude"
+  - "ChatGPT"
+  - "Cursor"
+
+ai_usage_summary: |
+  Used Claude for architectural discussions and refactoring. Used Cursor for code editing.
+  No candidate data was shared with external LLM APIs during ranking execution.
+
+# ============================================================================
+# Approach summary
+# ============================================================================
+methodology_summary: |
+  We implemented a deterministic CPU-only ranking funnel for the 5-minute reproduction constraint.
+  Stage 1 removes honeypots and implausible profiles using impossible dates, company founding years,
+  overlapping histories, exaggerated expert skill claims, and experience inconsistencies. Stage 2 scores
+  JD evidence from profile summaries, career descriptions, titles, companies, industries, and skills,
+  rewarding production retrieval, vector search, ranking/recommendation systems, evaluation frameworks,
+  Python, LLM/fine-tuning, and product-engineering signals while penalizing non-engineering or pure
+  research/keyword-stuffed profiles. Stage 3 applies Redrob behavioral signals including response rate,
+  response time, last activity, notice period, profile visibility, recruiter saves, assessments, GitHub,
+  relocation, interview completion, offer acceptance, verification, and salary fit. The final CSV includes
+  factual 1-2 sentence reasoning grounded in candidate fields.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
