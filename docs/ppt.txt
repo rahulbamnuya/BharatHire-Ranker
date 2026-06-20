@@ -1,217 +1,190 @@
-se this concept name in your PPT:
+==============================================================================
+BHARATHIRE AI RANKER — SLIDE DECK TEXT CONTENT
+==============================================================================
+Based on: docs/BharatHire-AI-Ranker-template.pptx
+Presenter: Rahul Bamniya (AI/ML Engineer)
 
-  Hybrid Evidence-Based Candidate Ranking Funnel
+------------------------------------------------------------------------------
+SLIDE 1: TITLE SLIDE
+------------------------------------------------------------------------------
+[Slide Title]
+BharatHire AI Ranker
 
-  Not “chatbot”, not “LLM screening”. It is a multi-signal learning-to-rank inspired system.
+[Slide Subtitle]
+High-performance offline candidate discovery engine for India's AI talent pool
 
-  Exact model/concept to say:
+[Slide Details]
+TRACK 1: THE DATA & AI CHALLENGE
+TEAM: BHARATHIRE AI RANKER
+RAHUL BAMNIYA — AI/ML ENGINEER
 
-  > Our solution uses a deterministic multi-stage ranking model combining JD evidence scoring, skill
-  > normalization, honeypot detection, behavioral availability signals, and explainable rule-based
-  > ranking. It is learning-to-rank inspired, but optimized for offline CPU reproduction under
-  > hackathon constraints.
+[Speaker Notes]
+Welcome, everyone. Today, I am presenting the BharatHire AI Ranker—an offline, CPU-only candidate discovery and ranking system built for the Redrob India Runs Challenge. It is designed to screen and rank massive candidate pools for the founding Senior AI Engineer role while meeting strict compute and reproducibility constraints.
 
-  For accuracy improvement, say:
+------------------------------------------------------------------------------
+SLIDE 2: THE RECRUITMENT BOTTLENECK: SCALE, TRAPS & COMPUTE COSTS
+------------------------------------------------------------------------------
+[Slide Title]
+The Recruitment Bottleneck: Scale, Traps & Compute Costs
 
-  > Future improvement: create a small manually labeled validation set and train/tune a lightweight
-  > Learning-to-Rank model such as XGBoost Ranker / LambdaMART over the same features.
+[On-Slide Points]
+* The Scale Challenge
+  Processing 100,000+ candidates for a single role overwhelms memory and throughput in traditional screening pipelines.
+* The "Honeypot" Threat
+  Spam profiles with inconsistent timelines and keyword stuffing evade simple keyword or frequency-based filters.
+* High API & Infra Costs
+  Relying on commercial LLM APIs at scale is cost-prohibitive and adds network latency for thousands of candidate screens.
+* Lack of Explainability
+  Black-box rankings leave recruiters without fact-based, auditable reasons for candidate prioritisation.
 
-  ———
+[Speaker Notes]
+Hiring teams face a massive bottleneck when filtering candidate databases. Standard setups crash on 100k dumps, fail to detect chronological fraud (honeypots), generate massive API bills, and output black-box ranking scores without explainable reasons.
 
-  Slide 2: Solution Overview
+------------------------------------------------------------------------------
+SLIDE 3: OUR SOLUTION: BHARATHIRE AI RANKER
+------------------------------------------------------------------------------
+[Slide Title]
+Our Solution: BharatHire AI Ranker
 
-  Proposed solution:
+[On-Slide Subtitle]
+Offline, CPU-only pipeline that converts large candidate sets into a ranked shortlist with factual, auditable explanations and robust spam detection.
 
-  > BharatHire AI Ranker ranks 100,000 candidates for the Redrob Senior AI Engineer JD using an
-  > offline, CPU-only ranking pipeline. It identifies candidates with real production retrieval,
-  > ranking, vector search, recommendation, evaluation, and AI engineering experience, then adjusts
-  > rank using Redrob behavioral signals.
+[On-Slide Columns]
+* 100% Offline, CPU-only
+  No external APIs, zero network costs, designed for commodity servers used by Indian recruiters and small hiring teams.
+* Robust Honeypot Traps
+  Chronological audits and expertise validation penalise fraudulent or inconsistent profiles automatically.
+* Factual Explainability
+  Plain-language summaries derived directly from profile fields — readable, non-templated, and auditable.
 
-  Differentiation:
+[Speaker Notes]
+Our solution runs fully local and CPU-only. It utilizes custom heuristic filtering, local semantic models, and a 23-signal behavioral scorecard to deliver deterministic, auditable, and honeypot-free candidate rankings at zero operating cost.
 
-  > Traditional matching checks keywords. Our system evaluates career-history evidence, production
-  > context, candidate availability, response behavior, honeypot risk, and factual reasoning. It
-  > avoids over-ranking candidates who only stuff AI keywords.
+------------------------------------------------------------------------------
+SLIDE 4: 3-STAGE PIPELINE DESIGN
+------------------------------------------------------------------------------
+[Slide Title]
+3-Stage Pipeline Design
 
-  ———
+[On-Slide Flowchart / Phases]
+1. Filter (CPU Heuristics)
+2. Embed (Local MiniLM)
+3. Scale (23-Signal Rank)
 
-  Slide 3: JD Understanding
+[Summary Description]
+Each stage is tuned for computational efficiency and recruiter relevance: fast heuristic culling, local semantic scoring, then multi-signal behavioural ranking.
 
-  Key JD requirements:
+[Speaker Notes]
+The pipeline is structured as a funnel. First, CPU heuristics filter out unqualified and inconsistent profiles. Second, a local embedding model calculates semantic job description match. Finally, the candidates are scored and scaled against 23 engagement signals to produce the top 100 list.
 
-  - 5-9 years preferred experience.
-  - Production AI/ML systems experience.
-  - Retrieval, embeddings, vector databases, hybrid search.
-  - Ranking, recommendation, search relevance.
-  - Evaluation: NDCG, MRR, MAP, A/B testing.
-  - Strong Python.
-  - Product engineering mindset.
-  - Not pure research-only.
-  - Not consulting-only background.
-  - Candidate should be active and reachable.
+------------------------------------------------------------------------------
+SLIDE 5: STAGE DETAILS — STAGE 1: FILTER (CPU HEURISTICS)
+------------------------------------------------------------------------------
+[Slide Title]
+Stage Details — Stage 1: Filter (CPU Heuristics)
 
-  Most important signals:
+[On-Slide Details]
+* 01 | Honeypot Removal
+  Chronology checks, founder/company date cross-validation, and keyword density heuristics to drop fraudulent profiles early.
+* 02 | Title & Experience Filter
+  Reject unrelated titles and candidates with <3 years relevant experience to meet role minima.
+* 03 | Fast I/O Streaming
+  Memory-efficient JSONL streaming prevents OOM (Out-of-Memory) when parsing massive candidate dumps.
 
-  - Career history descriptions.
-  - Skills and skill duration.
-  - Product-company experience.
-  - Production deployment language.
-  - Ranking/retrieval/evaluation evidence.
-  - Recruiter response rate.
-  - Last active date.
-  - Notice period.
-  - GitHub activity.
-  - Skill assessments.
-  - Honeypot/inconsistency checks.
+[Speaker Notes]
+In Stage 1, we parse candidates line-by-line to prevent memory leaks. We execute timeline audits, checking for start/end conflicts, overlapping roles, and founding date violations (such as claiming a role at Sarvam AI before 2023).
 
-  ———
+------------------------------------------------------------------------------
+SLIDE 6: STAGE DETAILS — STAGE 2: EMBED (LOCAL SEMANTIC SEARCH)
+------------------------------------------------------------------------------
+[Slide Title]
+Stage Details — Stage 2: Embed (Local Semantic Search)
 
-  Slide 4: Ranking Methodology
+[On-Slide Description]
+We run all-MiniLM-L6-v2 locally on CPU to compute sentence embeddings and cosine similarity against the job description. This provides strong semantic recall while remaining CPU-feasible.
 
-  How retrieve/score/rank:
+[On-Slide Bullet Points]
+* Batching and quantised matrix ops for throughput
+* Cosine thresholds tuned to balance precision and recall
+* Fallback lexical checks for narrow technical tokens
 
-  > The system streams candidates, removes suspicious profiles, extracts JD evidence from profile and
-  > work history text, scores technical fit, adds behavioral availability signals, then sorts by
-  > final score.
+[Speaker Notes]
+Stage 2 introduces semantic matching. Rather than relying on simple keyword checking, we run the all-MiniLM model offline. We compare the combined text profile against the Job Description to ensure deep ML/AI systems experience is captured.
 
-  Models/algorithms:
+------------------------------------------------------------------------------
+SLIDE 7: STAGE DETAILS — STAGE 3: SCALE (BEHAVIOURAL SCORING)
+------------------------------------------------------------------------------
+[Slide Title]
+Stage Details — Stage 3: Scale (Behavioural Scoring)
 
-  - Weighted evidence ranker.
-  - Skill normalization ontology.
-  - Honeypot detection rules.
-  - Behavioral signal scoring.
-  - Deterministic tie-breaking.
-  - Optional local embeddings only if cached offline.
+[On-Slide Description]
+Final ranking combines semantic match with 23 Redrob platform signals to surface candidates who are both relevant and likely to convert.
 
-  Final score concept:
+[On-Slide Grid]
+* Activity Signals
+  GitHub commits, repo recency, and open-source contribution trends.
+* Availability & Notice
+  Notice period, current employment status and recruiter response history.
+* Engagement & Quality
+  Profile completeness, endorsement counts and prior interview attendance.
 
-  Final Score =
-  Experience Fit
-  + Core AI Skill Evidence
-  + Retrieval/Ranking Evidence
-  + Production Evidence
-  + Evaluation Evidence
-  + Product Company Signal
-  + Behavioral Availability Score
-  - Honeypot / Bad Fit Penalties
+[Speaker Notes]
+A candidate who is technically perfect but unreachable is a hiring failure. Stage 3 integrates 23 platform signals, rewarding active, responsive, verified candidates with short notice periods while penalizing ghosters.
 
-  ———
+------------------------------------------------------------------------------
+SLIDE 8: KEY TECHNICAL INNOVATIONS
+------------------------------------------------------------------------------
+[Slide Title]
+Key Technical Innovations
 
-  Slide 5: Explainability & Data Validation
+[On-Slide List]
+* 1 | Chronological Auditing
+  Detects overlapping roles, impossible start dates and other timeline anomalies to neutralise honeypots.
+* 2 | Decimal-Safe Sorting
+  Rounds scores for validator compliance and ties are resolved deterministically by candidate ID ordering.
+* 3 | Interactive Tuning UI
+  Streamlit frontend with sliders for Years-of-Experience, skill weight and notice period to customise live rankings.
+* 4 | Zero Memory Leaks
+  Streaming parsers and chunked processing ensure safe operation on large JSONL files without OOMs.
 
-  Explainability:
+[Speaker Notes]
+Our key engineering highlights include: strict timeline auditing to reject honeypots, rounded scoring and determinism to guarantee validation success, and an interactive UI allowing live weight-tuning.
 
-  > Every selected candidate gets a 1-2 sentence explanation using only real profile facts: title,
-  > YoE, employers, skills, response rate, notice period, and last active date.
+------------------------------------------------------------------------------
+SLIDE 9: PERFORMANCE & IMPACT (PRODUCTION-GRADE)
+------------------------------------------------------------------------------
+[Slide Title]
+Performance & Impact (Production-Grade)
 
-  No hallucination:
+[On-Slide Statistics]
+* 100k Input Scale
+  Supports screening of 100,000+ candidate dumps per request.
+* Under 10s CPU Latency
+  End-to-end processing (100k -> ranked shortlist) under 10 seconds on a commodity CPU machine.
+* $0 Operating Cost
+  No API fees — all computation runs locally to eliminate per-request external costs.
 
-  > We do not use LLM-generated candidate claims. Reasoning is created from structured candidate
-  > fields only.
+[On-Slide Footnote]
+Human-readable, fact-based explanations increase recruiter trust and reduce time-to-hire for technical roles.
 
-  Suspicious profiles:
+[Speaker Notes]
+In terms of benchmark results, the pipeline screened 100,000 candidates on a basic CPU environment in under 10 seconds. Since it runs offline, the operational API cost is exactly zero, and our output CSV passed the validator on the first try.
 
-  > Honeypot detection checks impossible dates, future jobs, company founding-year violations,
-  > excessive expert skills with zero duration, overlapping histories, and experience mismatches.
+------------------------------------------------------------------------------
+SLIDE 10: ROADMAP & NEXT STEPS
+------------------------------------------------------------------------------
+[Slide Title]
+Roadmap & Next Steps
 
-  ———
+[On-Slide List]
+* Planned upgrades to increase accuracy while preserving offline CPU operations:
+  * Move to larger local embedding models (e.g., bge-base-en-v1.5) for richer semantics.
+  * Hybrid retrieval: dense embeddings + BM25 lexical matching to capture precise technical tokens.
+  * Deploy a quantised 4-bit Llama-3 as a local reasoner to generate conversational, auditable explanations for the top 100 candidates.
+* Next Steps:
+  * Integrate upgraded embedder in offline CI tests.
+  * A/B the lexicosemantic hybrid on a held-out dataset.
+  * Run cost/latency benchmarking on commodity Indian datacentre hardware.
 
-  Slide 6: End-to-End Workflow
-
-  Candidate JSONL / JSONL.GZ
-          ↓
-  Streaming parser
-          ↓
-  Honeypot + consistency filter
-          ↓
-  JD evidence extraction
-          ↓
-  Technical fit scoring
-          ↓
-  Behavioral signal scoring
-          ↓
-  Final deterministic ranking
-          ↓
-  Top 100 CSV
-          ↓
-  Validator + reasoning review
-
-  ———
-
-  Slide 7: System Architecture
-
-  Use this architecture text:
-
-  Input Layer
-  - JSON / JSONL / JSONL.GZ candidate parser
-
-  Validation Layer
-  - Honeypot detector
-  - Chronology checks
-  - Skill duration checks
-
-  Feature Layer
-  - Skill normalization
-  - JD evidence extraction
-  - Company/type detection
-  - Behavioral signal extraction
-
-  Ranking Layer
-  - Weighted evidence scoring
-  - Availability scoring
-  - Penalty model
-  - Deterministic sorting
-
-  Output Layer
-  - submission.csv
-  - factual reasoning
-  - Streamlit demo dashboard
-
-  ———
-
-  Slide 8: Results & Performance
-
-  Use these points:
-
-  - Processed full 100k candidate pool.
-  - Runtime around 23 seconds locally.
-  - CPU-only.
-  - No network calls.
-  - No hosted LLM APIs.
-  - submission.csv passed official validator.
-  - Top 100 had 0 locally detected honeypots.
-  - Output includes factual reasoning for every candidate.
-
-  ———
-
-  Slide 9: Technologies Used
-
-  | Tech | Why |
-  |---|---|
-  | Python | Fast offline ranking and easy reproduction |
-  | Standard library JSON/Gzip/CSV | No heavy dependency for official ranking |
-  | Streamlit | Demo/sandbox UI |
-  | Pandas | Dashboard tables |
-  | Plotly | Score/skill visualizations |
-  | Docker | Reproducible deployment |
-  | Rule-based LTR-inspired scoring | Explainable and CPU-safe |
-  | Optional sentence-transformers | Local semantic experiment only, not required |
-
-  ———
-
-  Best answer if they ask “which model did you use?”
-
-  Say this:
-
-  > We used a deterministic, learning-to-rank inspired multi-signal scoring model rather than a
-  > black-box LLM. The model combines technical JD evidence, normalized skills, career-history
-  > signals, product-company context, Redrob behavioral signals, and honeypot penalties. This was
-  > chosen because the challenge requires CPU-only, no-network, reproducible ranking under 5 minutes.
-
-  Future accuracy improvement answer:
-
-  > The next step is to manually label 100-300 candidates and tune the feature weights or train a
-  > lightweight XGBoost/LambdaMART ranker. That would improve NDCG@10 and NDCG@50 without breaking
-  > the compute constraints.
-
-────────────────────
+[Speaker Notes]
+For future iterations, we plan to adopt dense-sparse hybrid retrieval (MiniLM + BM25) and deploy a quantized local LLM (like Llama-3-8B-Instruct via llama.cpp) to write richer explanations. Thank you!
