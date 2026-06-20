@@ -227,7 +227,7 @@ This avoids hallucination and supports the Stage 4 manual review requirement.
 ### Install
 
 ```bash
-cd /Users/Rahul/Desktop/Red/temp_workspace
+cd BharatHire-Ranker
 pip install -r requirements.txt
 ```
 
