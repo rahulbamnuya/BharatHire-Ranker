@@ -11,6 +11,7 @@ env/
 *.jsonl
 *.gz
 *.csv
+*.xlsx
 data/
 
 # Explicitly track the sample candidate JSON
@@ -23,4 +24,5 @@ data/
 
 # Large presentation files
 *.pptx
+docs/extracted_ppt_template.txt
 
