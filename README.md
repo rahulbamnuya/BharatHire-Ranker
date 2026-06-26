@@ -11,6 +11,8 @@ pinned: false
 
 # BharatHire AI Ranker
 
+🚀 **Live Demo on Hugging Face Spaces**: [BharatHire-Ranker](https://huggingface.co/spaces/rahulbamniya/BharatHire-Ranker)
+
 BharatHire AI Ranker is an offline candidate discovery and ranking system built for the **Redrob India Runs Data & AI Challenge**. It reads the released candidate pool, removes implausible profiles, scores each candidate against the Senior AI Engineer JD, applies Redrob behavioral signals, and writes a validator-compliant top-100 CSV.
 
 The official reproduction path is deterministic, CPU-only, network-free, and does not depend on hosted LLM APIs, GPUs, or model downloads during ranking.
