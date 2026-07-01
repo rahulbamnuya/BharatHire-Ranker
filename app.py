@@ -365,10 +365,6 @@ if uploaded_file is not None:
         source_name = uploaded_file.name
     except Exception as exc:
         st.error(f"Failed to parse uploaded candidate file: {exc}")
-elif os.path.exists("sample_candidates.json"):
-    st.info("💡 Running dashboard on default 'sample_candidates.json' dataset. Upload your own candidate file in the sidebar to inspect another dataset.")
-    parsed_list = parse_local_candidates("sample_candidates.json")
-    source_name = "sample_candidates.json"
 
 total = len(parsed_list)
 

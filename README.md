@@ -41,7 +41,9 @@ temp_workspace/
 ├── rank.py
 ├── app.py
 ├── submission.csv
+├── submission.xlsx
 ├── submission_metadata.yaml
+├── sample_candidates.json
 ├── backend/
 │   ├── parsing/
 │   │   └── normalize.py
@@ -50,12 +52,9 @@ temp_workspace/
 │   │   └── scorer.py
 │   └── explainability/
 │       └── reasoning.py
-├── docs/
-│   ├── pipeline_architecture.md
-│   └── optimization_strategies.md
-└── data/
-    ├── candidates.jsonl
-    └── sample_candidates.json
+└── docs/
+    ├── pipeline_architecture.md
+    └── optimization_strategies.md
 ```
 
 ## Tech Stack
